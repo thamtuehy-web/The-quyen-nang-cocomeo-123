@@ -922,7 +922,6 @@ function refreshData() {
 
 // ==============================================================
 // 9. QUẢN TRỊ VIÊN & XÓA DỮ LIỆU THẺ (ADMIN ONLY)
-// Tài khoản: cocomeo | Mật khẩu: 12121990
 // ==============================================================
 let pendingAdminCallback = null;
 
@@ -955,7 +954,7 @@ function updateAdminUI() {
 function openAdminLoginModal(callback = null) {
   pendingAdminCallback = callback;
   const modal = document.getElementById('adminLoginModal');
-  document.getElementById('adminUsernameInput').value = 'cocomeo';
+  document.getElementById('adminUsernameInput').value = '';
   document.getElementById('adminPasswordInput').value = '';
   modal.classList.remove('hidden');
   setTimeout(() => {
@@ -1109,7 +1108,6 @@ function handleDeleteActiveCard() {
 
 // ==============================================================
 // 10. HỆ THỐNG ĐĂNG NHẬP VÀO APP BẢO MẬT & QUÊN MẬT KHẨU
-// Tên đăng nhập: cocomeo | Mật khẩu: Meo1234*
 // ==============================================================
 function isAppLoggedIn() {
   return !!(localStorage.getItem('cocomeo_app_session') || sessionStorage.getItem('cocomeo_app_session'));
@@ -1269,11 +1267,6 @@ function openForgotPasswordModal() {
   document.getElementById('resetOtpInput').value = '';
   document.getElementById('resetNewPasswordInput').value = '';
   document.getElementById('resetConfirmPasswordInput').value = '';
-  const hintEl = document.getElementById('resetOtpDemoHint');
-  if (hintEl) {
-    hintEl.classList.add('hidden');
-    hintEl.innerText = '';
-  }
   modal.classList.remove('hidden');
   lucide.createIcons();
 }
@@ -1311,23 +1304,16 @@ async function handleSendResetOtp() {
     Swal.fire({
       icon: 'success',
       title: 'Đã Gửi Mã Xác Nhận!',
-      html: `Mã OTP đã được gửi tới email <b>${data.email}</b>.<br><small class="text-slate-500">Vui lòng kiểm tra hộp thư để lấy mã 6 số tạo mật khẩu mới.</small>`,
-      confirmButtonText: 'Nhập Mã OTP Ngay',
+      html: `Mã OTP đã được gửi tới email <b>${data.email}</b>.<br><small class="text-slate-500">Vui lòng kiểm tra hộp thư đến để lấy mã 6 số tạo mật khẩu mới.</small>`,
+      confirmButtonText: 'Nhập Mã OTP',
       confirmButtonColor: '#F97316'
     });
 
     document.getElementById('forgotStep1').classList.add('hidden');
     document.getElementById('forgotStep2').classList.remove('hidden');
 
-    const hintEl = document.getElementById('resetOtpDemoHint');
-    if (hintEl && data.demo_otp) {
-      hintEl.classList.remove('hidden');
-      hintEl.innerHTML = `🔑 Mã OTP gửi tới email (kiểm tra nhanh): <span class="text-sm font-mono text-red-600 bg-white px-1.5 py-0.5 rounded border border-amber-300 font-black">${data.demo_otp}</span>`;
-      document.getElementById('resetOtpInput').value = data.demo_otp;
-    }
-
     setTimeout(() => {
-      document.getElementById('resetNewPasswordInput').focus();
+      document.getElementById('resetOtpInput').focus();
     }, 200);
 
   } catch (err) {

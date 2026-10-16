@@ -494,8 +494,7 @@ def forgot_password():
     return jsonify({
         'success': True,
         'message': f'Đã gửi mã xác nhận tạo mật khẩu mới tới email {email}!',
-        'email': email,
-        'demo_otp': otp
+        'email': email
     })
 
 @app.route('/api/auth/reset-password', methods=['POST'])
